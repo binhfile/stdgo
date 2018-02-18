@@ -10,8 +10,10 @@ REPORT_DIR="$CUR_DIR"/../_report
 function do_help(){
     echo "$0 <mode> <options>"
     echo "  UNITTEST"
-    echo "  unittest <mode> <unittest options>"
+    echo "  unittest <mode> <options>"
     echo "           all"
+    echo "  benchmark <mode> <options>"
+    echo "           all --logx --logy --show"
     return
 }
 
@@ -27,9 +29,9 @@ function do_check_existed() {
 
 MODE="$1"
 if [[ "$MODE" == "unittest" ]]; then
-    "$CUR_DIR"/unittest/run.sh "$BUILD_DIR"/unittest "$REPORT_DIR" "${@:2}"
+    "$CUR_DIR"/unittest/run.sh "$BUILD_DIR"/unittest "$REPORT_DIR"/unittest "${@:2}"
 elif [[ "$MODE" == "benchmark" ]]; then
-    "$CUR_DIR"/benchmark/run.sh "$BUILD_DIR"/benchmark "$REPORT_DIR" "${@:2}"
+    "$CUR_DIR"/benchmark/run.sh "$BUILD_DIR"/benchmark "$REPORT_DIR"/benchmark "${@:2}"
 else
     do_help
 fi

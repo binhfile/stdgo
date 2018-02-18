@@ -59,7 +59,9 @@
                 "UNICODE",
                 "_UNICODE",
                 "STDGO_UNITTEST",
-                "STDGO_UNITTEST_ALL"
+                "STDGO_UNITTEST_ALL",
+                "STDGO_BENCHMARK",
+                "STDGO_BENCHMARK_ALL"
             ],
             "intelliSenseMode": "msvc-x64",
             "browse": {
