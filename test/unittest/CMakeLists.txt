@@ -1,15 +1,30 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0.2)
 project(unittest)
 
 # source
+include_directories(../../include)
+aux_source_directory(../../src/plot SRC_LIST)
+
+# testcase
 aux_source_directory(. SRC_LIST)
+aux_source_directory(plot SRC_LIST)
+
+
 set (CMAKE_CXX_FLAGS "")
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -m32")
 
 # googletest
 include_directories("${GTEST_DIR}")
 include_directories("${GTEST_DIR}/include")
+# Qt
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+find_package(Qt5Core REQUIRED)
+find_package(Qt5Gui REQUIRED)
+find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Charts REQUIRED)
+
 # mode
 if ("${MODE}" STREQUAL "")
     set (MODE "all")
@@ -21,3 +36,6 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DSTDGO_UNITTEST -DSTDGO_UNITTEST_${MOD
 # application
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_executable(${PROJECT_NAME} ${SRC_LIST} "${GTEST_DIR}/src/gtest-all.cc")
+
+# Qt
+target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Charts)
