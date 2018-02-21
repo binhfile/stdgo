@@ -52,7 +52,9 @@
                 "C:/Program Files (x86)/Windows Kits/10/Include/10.0.16299.0/shared",
                 "C:/Program Files (x86)/Windows Kits/10/Include/10.0.16299.0/winrt",
                 "${workspaceRoot}",
-                "${workspaceRoot}/third_party/googletest/googletest/include"
+                "${workspaceRoot}/include",
+                "${workspaceRoot}/third_party/googletest/googletest/include",
+                "C:/Qt/Qt5.10.1/5.10.1/mingw53_32/include"
             ],
             "defines": [
                 "_DEBUG",
@@ -61,7 +63,9 @@
                 "STDGO_UNITTEST",
                 "STDGO_UNITTEST_ALL",
                 "STDGO_BENCHMARK",
-                "STDGO_BENCHMARK_ALL"
+                "STDGO_BENCHMARK_ALL",
+                "STDGO_ENABLE_ALL",
+                "STDGO_ENABLE_PLOT_BACKEND_QT"
             ],
             "intelliSenseMode": "msvc-x64",
             "browse": {
