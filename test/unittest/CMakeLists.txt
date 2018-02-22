@@ -16,12 +16,11 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
 
 set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -ggdb -g3")
-set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fsanitize=leak -fsanitize=address -fsanitize=undefined -fno-sanitize-recover")
 
-if (${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
+if (MINGW)
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
 else()
-
+    set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fsanitize=leak -fsanitize=address -fsanitize=undefined -fno-sanitize-recover")
 endif()
 # googletest
 include_directories("${GTEST_DIR}")
@@ -48,7 +47,8 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_executable(${PROJECT_NAME} ${SRC_LIST} "${GTEST_DIR}/src/gtest-all.cc")
 
-if (${CMAKE_CXX_COMPILER_ID} STREQUAL GNU)
+if (MINGW)
+else()
     target_link_libraries(${PROJECT_NAME} pthread rt)
 endif()
 # Qt

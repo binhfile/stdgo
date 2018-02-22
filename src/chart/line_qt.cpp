@@ -1,22 +1,21 @@
 /**
  * @author binhfile
- * @brief Chart backend by QT
+ * @brief Line2D backend by QT
  */
 #if defined(STDGO_HAS_CONFIG_H)
 #include <stdgo_config.hpp>
 #endif
 
-#if (defined(STDGO_ENABLE_ALL) || defined(STDGO_ENABLE_CHART)) &&              \
-    defined(STDGO_ENABLE_CHART_BACKEND_QT)
+#if (defined(STDGO_ENABLE_ALL) || defined(STDGO_ENABLE_CHART)) && defined(STDGO_ENABLE_CHART_BACKEND_QT)
 #include "../include/stdgo/chart/line.hpp"
 
 #include <list>
 
-#include <QScreen>
 #include <QtCharts/QChartView>
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QLogValueAxis>
 #include <QtCharts/QValueAxis>
+#include <QtGui/QScreen>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QWidget>
@@ -27,48 +26,47 @@
 
 namespace stdgo {
 namespace chart {
-namespace line {
 
-class ChartImpl {
+class Line2DImpl {
   private:
-    std::list<std::shared_ptr<Line>> lst_line_;
+    std::list<std::shared_ptr<LineData2D>> lst_line_;
     std::list<std::shared_ptr<Axis>> lst_axis_;
     std::string title_;
     QtCharts::QChartView *chart_;
 
   public:
-    ChartImpl() : chart_{nullptr} {}
-    ChartImpl(const ChartImpl &rhs) : chart_{nullptr} {
+    Line2DImpl() : chart_{nullptr} {}
+    Line2DImpl(const Line2DImpl &rhs) : chart_{nullptr} {
         // copy constructor
         for (const auto &src : rhs.lst_line_) {
-            lst_line_.push_back(std::make_shared<Line>(*src));
+            lst_line_.push_back(std::make_shared<LineData2D>(*src));
         }
         for (const auto &src : rhs.lst_axis_) {
             lst_axis_.push_back(std::make_shared<Axis>(*src));
         }
     }
-    ChartImpl(ChartImpl &&rhs) noexcept : chart_{nullptr} {
+    Line2DImpl(Line2DImpl &&rhs) noexcept : chart_{nullptr} {
         // move constructor
         lst_line_ = std::move(rhs.lst_line_);
         lst_axis_ = std::move(rhs.lst_axis_);
     }
-    ChartImpl &operator=(const ChartImpl &rhs) {
+    Line2DImpl &operator=(const Line2DImpl &rhs) {
         // copy assigment
         for (const auto &src : rhs.lst_line_) {
-            lst_line_.push_back(std::make_shared<Line>(*src));
+            lst_line_.push_back(std::make_shared<LineData2D>(*src));
         }
         for (const auto &src : rhs.lst_axis_) {
             lst_axis_.push_back(std::make_shared<Axis>(*src));
         }
         return *this;
     }
-    ChartImpl &operator=(ChartImpl &&rhs) noexcept {
+    Line2DImpl &operator=(Line2DImpl &&rhs) noexcept {
         // move assigment
         this->lst_line_ = std::move(rhs.lst_line_);
         this->lst_axis_ = std::move(rhs.lst_axis_);
         return *this;
     }
-    virtual ~ChartImpl() = default;
+    virtual ~Line2DImpl() = default;
     void Show(std::error_code *ec) {
         UNUSED(ec);
         int argc = 1;
@@ -84,8 +82,7 @@ class ChartImpl {
             window.setCentralWidget(chart_);
             QScreen *screen = QGuiApplication::primaryScreen();
             QRect screenGeometry = screen->geometry();
-            window.resize(screenGeometry.width() / 2,
-                          screenGeometry.height() / 2);
+            window.resize(screenGeometry.width() / 2, screenGeometry.height() / 2);
             window.show();
             a.exec();
         }
@@ -107,9 +104,9 @@ class ChartImpl {
     }
     void SetTitle(const std::string &val) { title_ = val; }
 
-    Line *AddLine(std::error_code *ec = nullptr) {
+    LineData2D *AddLine(std::error_code *ec = nullptr) {
         UNUSED(ec);
-        auto line = std::make_shared<Line>();
+        auto line = std::make_shared<LineData2D>();
         lst_line_.push_back(line);
         return line.get();
     }
@@ -124,11 +121,13 @@ class ChartImpl {
 
         for (const auto &axis : lst_axis_) {
             switch (axis->position()) {
-            case Axis::Position::Bottom: {
+            case Axis::Position::Bottom:
+            case Axis::Position::X: {
                 setAxis(ch, axis.get(), Qt::AlignBottom);
                 break;
             }
-            case Axis::Position::Left: {
+            case Axis::Position::Left:
+            case Axis::Position::Y: {
                 setAxis(ch, axis.get(), Qt::AlignLeft);
                 break;
             }
@@ -160,8 +159,7 @@ class ChartImpl {
         chart_ = new QtCharts::QChartView(ch);
         chart_->setRenderHint(QPainter::Antialiasing);
     }
-    void setAxis(QtCharts::QChart *ch, const Axis *axis,
-                 Qt::Alignment alignment) {
+    void setAxis(QtCharts::QChart *ch, const Axis *axis, Qt::Alignment alignment) {
         if (axis->is_logarithm()) {
             auto *obj = new QtCharts::QLogValueAxis();
             obj->setTitleText(QString(axis->title().c_str()));
@@ -177,47 +175,44 @@ class ChartImpl {
     }
 };
 
-Chart::Chart() : impl_(std::unique_ptr<ChartImpl>(new ChartImpl)) {}
-Chart::Chart(const Chart &rhs) : stdgo::chart::Chart() {
+Line2D::Line2D() : impl_(std::unique_ptr<Line2DImpl>(new Line2DImpl)) {}
+Line2D::Line2D(const Line2D &rhs) : stdgo::chart::Chart() {
     // copy constructor
-    auto *impl = new ChartImpl;
+    auto *impl = new Line2DImpl;
     *impl = *(rhs.impl_);
-    impl_ = std::unique_ptr<ChartImpl>(impl);
+    impl_ = std::unique_ptr<Line2DImpl>(impl);
 }
-Chart::Chart(Chart &&rhs) noexcept {
+Line2D::Line2D(Line2D &&rhs) noexcept {
     // move constructor
     impl_ = std::move(rhs.impl_);
 }
-Chart &Chart::operator=(const Chart &rhs) {
+Line2D &Line2D::operator=(const Line2D &rhs) {
     // copy assigment
-    auto *impl = new ChartImpl;
+    auto *impl = new Line2DImpl;
     *impl = *(rhs.impl_);
-    impl_ = std::unique_ptr<ChartImpl>(impl);
+    impl_ = std::unique_ptr<Line2DImpl>(impl);
     return *this;
 }
-Chart &Chart::operator=(Chart &&rhs) noexcept {
+Line2D &Line2D::operator=(Line2D &&rhs) noexcept {
     // move assigment
     impl_ = std::move(rhs.impl_);
     return *this;
 }
-void Chart::Show(std::error_code *ec) { impl_->Show(ec); }
-void Chart::Save(const std::string &image_path, std::error_code *ec) {
-    impl_->Save(image_path, ec);
-}
-void Chart::SetTitle(const std::string &val) { impl_->SetTitle(val); }
+void Line2D::Show(std::error_code *ec) { impl_->Show(ec); }
+void Line2D::Save(const std::string &image_path, std::error_code *ec) { impl_->Save(image_path, ec); }
+void Line2D::SetTitle(const std::string &val) { impl_->SetTitle(val); }
 
-Line *Chart::AddLine(std::error_code *ec) { return impl_->AddLine(ec); }
-Axis *Chart::AddAxis(std::error_code *ec) { return impl_->AddAxis(ec); }
+LineData2D *Line2D::AddLine(std::error_code *ec) { return impl_->AddLine(ec); }
+Axis *Line2D::AddAxis(std::error_code *ec) { return impl_->AddAxis(ec); }
 
-std::shared_ptr<Chart> New(std::error_code *ec) {
+std::shared_ptr<Line2D> NewLine2D(std::error_code *ec) {
     UNUSED(ec);
-    auto plot = std::make_shared<Chart>();
+    auto plot = std::make_shared<Line2D>();
 
     return plot;
 }
 
-} // namespace line
 } // namespace chart
 } // namespace stdgo
 
-#endif // STDGO_ENABLE_CHART
+#endif // STDGO_ENABLE_CHART_BACKEND_QT
