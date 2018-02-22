@@ -9,11 +9,11 @@ REPORT_DIR="$CUR_DIR"/../_report
 
 function do_help(){
     echo "$0 <mode> <options>"
-    echo "  UNITTEST"
     echo "  unittest <mode> <options>"
     echo "           all"
     echo "  benchmark <mode> <options>"
     echo "           all --logx --logy --show"
+    echo "  clang-tidy"
     return
 }
 
@@ -32,6 +32,8 @@ if [[ "$MODE" == "unittest" ]]; then
     "$CUR_DIR"/unittest/run.sh "$BUILD_DIR"/unittest "$REPORT_DIR"/unittest "${@:2}"
 elif [[ "$MODE" == "benchmark" ]]; then
     "$CUR_DIR"/benchmark/run.sh "$BUILD_DIR"/benchmark "$REPORT_DIR"/benchmark "${@:2}"
+elif [[ "$MODE" == "clang-tidy" ]]; then
+    "$CUR_DIR"/clang_tidy/run.sh "$BUILD_DIR" "$REPORT_DIR" "${@:2}"
 else
     do_help
 fi
