@@ -52,7 +52,12 @@ function do_clang_tidy() {
     fi 
 	
     "$PYTHON" "$CUR_DIR"/clang-tidy.py  \
-        -checks="*,-llvm-header-guard" \
+        -checks="*,\
+        -llvm-header-guard,\
+        -google-default-arguments,\
+        -readability-redundant-member-init,\
+        -modernize-use-override,\
+        -hicpp-use-override" \
         -header-filter=.*  \
         -p "$DB_PATH" 2>"$BUILD_DIR"/clang_tody_py.err.log > "$BUILD_DIR"/clang_tidy_raw.txt
     "$GO" run "$CUR_DIR"/clang_tidy_parser.go -input="$BUILD_DIR"/clang_tidy_raw.txt \
