@@ -12,8 +12,13 @@ aux_source_directory(plot SRC_LIST)
 
 set (CMAKE_CXX_FLAGS "")
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -m32")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
+if (${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
+else()
+
+endif()
 # googletest
 include_directories("${GTEST_DIR}")
 include_directories("${GTEST_DIR}/include")
@@ -39,5 +44,8 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_executable(${PROJECT_NAME} ${SRC_LIST} "${GTEST_DIR}/src/gtest-all.cc")
 
+if (${CMAKE_CXX_COMPILER_ID} STREQUAL GNU)
+    target_link_libraries(${PROJECT_NAME} pthread rt)
+endif()
 # Qt
 target_link_libraries(${PROJECT_NAME} Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Charts)

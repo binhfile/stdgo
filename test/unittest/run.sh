@@ -49,6 +49,8 @@ function find_make() {
 function find_qt() {
     if [[ "$MACHINE" == "MinGW" ]];then
         QT_DIR="C:\\Qt\\Qt5.10.1\\5.10.1\\mingw53_32"
+    else
+        QT_DIR="/opt/Qt5.10.1/5.10.1/gcc_64"
     fi
     return 
 }
@@ -120,6 +122,7 @@ function do_run() {
         "$CUR_DIR" || exit 1
     "$MAKE" -j4 || exit 1
     install_qt_depend "$QT_DIR" "$BUILD_DIR"
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"$QT_DIR"/lib
     ./unittest 
     return
 }
