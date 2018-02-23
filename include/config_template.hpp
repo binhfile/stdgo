@@ -8,7 +8,7 @@
 // #define STDGO_HAS_CONFIG_H
 // #define STDGO_ENABLE_ALL
 
-// #define STDGO_ENABLE_PLOT 1
-// #define STDGO_ENABLE_PLOT_BACKEND_QT 1
+// #define STDGO_ENABLE_CHART 1
+// #define STDGO_ENABLE_CHART_BACKEND_QT 1
 
 #endif // STDGO_CONFIG_H

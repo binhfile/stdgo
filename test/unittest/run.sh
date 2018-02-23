@@ -115,7 +115,7 @@ function do_run() {
     cd "$BUILD_DIR"
     "$CMAKE" -G "Unix Makefiles" \
         -DCMAKE_MAKE_PROGRAM="$MAKE" \
-        -DCMAKE_BUILD_TYPE=Debug \
+        -DCMAKE_BUILD_TYPE=Release \
         -DMODE="$1" \
         -DGTEST_DIR="$CUR_DIR"/../../third_party/googletest/googletest \
         -DCMAKE_PREFIX_PATH="$QT_DIR" \
