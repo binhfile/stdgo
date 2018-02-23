@@ -15,12 +15,18 @@ BASE_FLAGS = [
         '-ferror-limit=10000',
         '-DNDEBUG',
         '-DSTDGO_ENABLE_ALL',
+        '-DSTDGO_ENABLE_CHART',
+        '-DSTDGO_ENABLE_CHART_BACKEND_QT',
+        '-DSTDGO_UNITTEST',
+        '-DSTDGO_UNITTEST_ALL',
+        '-DSTDGO_UNITTEST_CHART',
         '-std=c++11',
         '-xc++',
         '-I/usr/lib/',
         '-I/usr/include/',
-        '-I./test/googletest/googletest/include',
-        '-I/opt/Qt5.10.1/5.10.1/gcc_64/include'
+        '-I/opt/Qt5.10.1/5.10.1/gcc_64/include',
+        '-I./include',
+        '-I./third_party/googletest/googletest/include'
         ]
 
 SOURCE_EXTENSIONS = [
