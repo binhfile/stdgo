@@ -5,6 +5,6 @@
  * @brief Plotting and visualizing data
  */
 
-#include "chart/line.hpp"
+#include "chart/chart_2d.hpp"
 
 #endif // STDGO_CHART_H

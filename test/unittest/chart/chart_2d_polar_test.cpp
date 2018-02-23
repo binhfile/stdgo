@@ -7,15 +7,16 @@
 #define PI 3.1416f
 #endif
 
-TEST(chart, qt_line) {
+TEST(chart, polar) {
     std::error_code ec;
     std::size_t T = 10;
     std::size_t N = T * 5;
 
-    auto chart = stdgo::chart::NewLine2D(&ec);
+    auto chart = std::make_shared<stdgo::chart::Chart2D>();
     ASSERT_EQ(0, ec.value());
     ASSERT_NE(nullptr, chart);
-    chart->SetTitle("Line 2D");
+    chart->SetTitle("Polar");
+    chart->SetType(stdgo::chart::Chart2D::Type::kPolar);
 
     {
         auto *line = chart->AddLine(&ec);
@@ -69,18 +70,17 @@ TEST(chart, qt_line) {
     {
         auto *axis = chart->AddAxis(&ec);
         ASSERT_EQ(0, ec.value());
-        axis->set_title("logarithm");
-        axis->set_position(stdgo::chart::Axis::Position::kBottom);
-        axis->set_logarithm(true);
+        axis->set_title("angular");
+        axis->set_position(stdgo::chart::Axis::Position::kAngular);
     }
     {
         auto *axis = chart->AddAxis(&ec);
         ASSERT_EQ(0, ec.value());
-        axis->set_title("linear");
-        axis->set_position(stdgo::chart::Axis::Position::kLeft);
+        axis->set_title("radial");
+        axis->set_position(stdgo::chart::Axis::Position::kRadial);
         axis->set_tick_count(10);
         axis->set_minor_tick_count(5);
-        axis->set_minimum(0.5);
+        axis->set_minimum(1);
         axis->set_maximum(3.5);
     }
 
