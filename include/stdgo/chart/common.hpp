@@ -22,8 +22,12 @@ class Point2D {
 
     float x() const;
     float y() const;
+    float angle() const;  // like x
+    float radius() const; // like y
     void set_x(float _x);
     void set_y(float _y);
+    void set_angle(float _val);
+    void set_radius(float _val);
 
   protected:
     float x_;
@@ -141,7 +145,8 @@ class Chart {
     virtual void SetTitle(const std::string &val) = 0;
 
     virtual void Show(std::error_code *ec = nullptr) = 0;
-    virtual void Save(const std::string &image_path, std::error_code *ec = nullptr) = 0;
+    virtual void Save(const std::string &image_path, std::size_t width = 0, std::size_t height = 0,
+                      std::error_code *ec = nullptr) = 0;
 };
 
 } // namespace chart

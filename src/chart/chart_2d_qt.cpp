@@ -92,7 +92,8 @@ class Chart2DImpl {
             a.exec();
         }
     }
-    void Save(const std::string &image_path, std::error_code *ec) {
+    void Save(const std::string &image_path, std::size_t width, std::size_t height,
+              std::error_code *ec) {
         UNUSED(ec);
         int argc = 1;
         uint8_t argv0[32] = {0};
@@ -103,6 +104,11 @@ class Chart2DImpl {
             render();
         }
         if (chart_ != nullptr) {
+            if (width == 0 || height == 0) {
+                width = 1280;
+                height = 720;
+            }
+            chart_->resize(width, height);
             QPixmap p = chart_->grab();
             p.save(QString(image_path.c_str()));
         }
@@ -263,8 +269,9 @@ Chart2D &Chart2D::operator=(Chart2D &&rhs) noexcept {
 }
 Chart2D::~Chart2D() {}
 void Chart2D::Show(std::error_code *ec) { impl_->Show(ec); }
-void Chart2D::Save(const std::string &image_path, std::error_code *ec) {
-    impl_->Save(image_path, ec);
+void Chart2D::Save(const std::string &image_path, std::size_t width, std::size_t height,
+                   std::error_code *ec) {
+    impl_->Save(image_path, width, height, ec);
 }
 void Chart2D::SetTitle(const std::string &val) { impl_->SetTitle(val); }
 

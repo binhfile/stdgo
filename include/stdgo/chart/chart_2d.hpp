@@ -26,7 +26,8 @@ class Chart2D : public stdgo::chart::Chart {
     virtual ~Chart2D();
     /* IPlot API */
     void Show(std::error_code *ec = nullptr) override;
-    void Save(const std::string &image_path, std::error_code *ec = nullptr) override;
+    void Save(const std::string &image_path, std::size_t width = 0, std::size_t height = 0,
+              std::error_code *ec = nullptr) override;
     void SetTitle(const std::string &val) override;
     /* Line API only */
     void SetType(Type _type);

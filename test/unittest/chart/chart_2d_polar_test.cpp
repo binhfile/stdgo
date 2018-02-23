@@ -30,8 +30,8 @@ TEST(chart, polar) {
         for (std::size_t i = 0; i < N; i++) {
             float x = (float)i / T;
             float y = sin(2 * PI * x);
-            points->at(i).set_x(x + 1);
-            points->at(i).set_y(y + 2);
+            points->at(i).set_angle(x);
+            points->at(i).set_radius(y + 1);
         }
     }
     {
@@ -45,9 +45,9 @@ TEST(chart, polar) {
         points->resize(N);
         for (std::size_t i = 0; i < N; i++) {
             float x = (float)i / T;
-            float y = cos(2 * PI * x);
-            points->at(i).set_x(x + 1);
-            points->at(i).set_y(y + 2);
+            float y = sin(2 * PI * x);
+            points->at(i).set_angle(x);
+            points->at(i).set_radius(y + 1);
         }
     }
     {
@@ -62,8 +62,8 @@ TEST(chart, polar) {
         for (std::size_t i = 0; i < N; i++) {
             float x = (float)i / T;
             float y = ((float)i / N);
-            points->at(i).set_x(x + 1);
-            points->at(i).set_y(y + 2);
+            points->at(i).set_angle(x);
+            points->at(i).set_radius(y + 1);
         }
     }
 
@@ -72,6 +72,8 @@ TEST(chart, polar) {
         ASSERT_EQ(0, ec.value());
         axis->set_title("angular");
         axis->set_position(stdgo::chart::Axis::Position::kAngular);
+        axis->set_minimum(0);
+        axis->set_maximum((float)N / T * 1.2);
     }
     {
         auto *axis = chart->AddAxis(&ec);
@@ -80,8 +82,8 @@ TEST(chart, polar) {
         axis->set_position(stdgo::chart::Axis::Position::kRadial);
         axis->set_tick_count(10);
         axis->set_minor_tick_count(5);
-        axis->set_minimum(1);
-        axis->set_maximum(3.5);
+        axis->set_minimum(0);
+        axis->set_maximum(2.2);
     }
 
     chart->Save("output.png");

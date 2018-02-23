@@ -45,7 +45,7 @@ TEST(chart, line) {
         points->resize(N);
         for (std::size_t i = 0; i < N; i++) {
             float x = (float)i / T;
-            float y = cos(2 * PI * x);
+            float y = sin(2 * PI * x);
             points->at(i).set_x(x + 1);
             points->at(i).set_y(y + 2);
         }
