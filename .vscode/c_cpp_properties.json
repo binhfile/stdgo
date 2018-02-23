@@ -65,7 +65,8 @@
                 "STDGO_BENCHMARK",
                 "STDGO_BENCHMARK_ALL",
                 "STDGO_ENABLE_ALL",
-                "STDGO_ENABLE_PLOT_BACKEND_QT"
+                "STDGO_ENABLE_CHART_BACKEND_QT",
+                "STDGO_UNITTEST_CHART"
             ],
             "intelliSenseMode": "msvc-x64",
             "browse": {

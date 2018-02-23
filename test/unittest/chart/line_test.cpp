@@ -12,7 +12,7 @@ TEST(chart, qt_line) {
     std::size_t T = 128;
     std::size_t N = T * 5;
 
-    auto chart = stdgo::chart::line::New(&ec);
+    auto chart = stdgo::chart::NewLine2D(&ec);
     ASSERT_EQ(0, ec.value());
     ASSERT_NE(nullptr, chart);
     chart->SetTitle("Chart with Qt");
@@ -51,14 +51,14 @@ TEST(chart, qt_line) {
         auto *axis = chart->AddAxis(&ec);
         ASSERT_EQ(0, ec.value());
         axis->set_title("Axis X");
-        axis->set_position(stdgo::chart::line::Axis::Position::Bottom);
+        axis->set_position(stdgo::chart::Axis::Position::Bottom);
         axis->set_logarithm(true);
     }
     {
         auto *axis = chart->AddAxis(&ec);
         ASSERT_EQ(0, ec.value());
         axis->set_title("Axis Y");
-        axis->set_position(stdgo::chart::line::Axis::Position::Left);
+        axis->set_position(stdgo::chart::Axis::Position::Left);
         axis->set_tick_count(10);
         axis->set_minor_tick_count(5);
         // axis->set_logarithm(true);
