@@ -25,7 +25,7 @@ class Line2D : public stdgo::chart::Chart {
     void Save(const std::string &image_path, std::error_code *ec = nullptr) override;
     void SetTitle(const std::string &val) override;
     /* Line API only */
-    LineData2D *AddLine(std::error_code *ec = nullptr);
+    PointSeries2D *AddLine(std::error_code *ec = nullptr);
     Axis *AddAxis(std::error_code *ec = nullptr);
 
   protected:

@@ -12,5 +12,9 @@ float Point2D::y() const { return y_; }
 void Point2D::set_x(float _x) { x_ = _x; }
 void Point2D::set_y(float _y) { y_ = _y; }
 
+Point3D::Point3D(float _x, float _y, float _z) : Point2D(_x, _y), z_(_z) {}
+float Point3D::z() const { return z_; }
+void Point3D::set_z(float _z) { z_ = _z; }
+
 } // namespace chart
 } // namespace stdgo

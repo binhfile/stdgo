@@ -6,14 +6,17 @@
 #include <stdgo_config.hpp>
 #endif
 
-#if (defined(STDGO_ENABLE_ALL) || defined(STDGO_ENABLE_CHART)) && defined(STDGO_ENABLE_CHART_BACKEND_QT)
-#include "../include/stdgo/chart/line.hpp"
+#if defined(STDGO_ENABLE_ALL) || defined(STDGO_ENABLE_CHART)
+#if defined(STDGO_ENABLE_CHART_BACKEND_QT)
+#include "../../include/stdgo/chart/line.hpp"
 
 #include <list>
 
 #include <QtCharts/QChartView>
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QLogValueAxis>
+#include <QtCharts/QScatterSeries>
+#include <QtCharts/QSplineSeries>
 #include <QtCharts/QValueAxis>
 #include <QtGui/QScreen>
 #include <QtWidgets/QApplication>
@@ -29,7 +32,7 @@ namespace chart {
 
 class Line2DImpl {
   private:
-    std::list<std::shared_ptr<LineData2D>> lst_line_;
+    std::list<std::shared_ptr<PointSeries2D>> lst_line_;
     std::list<std::shared_ptr<Axis>> lst_axis_;
     std::string title_;
     QtCharts::QChartView *chart_;
@@ -39,7 +42,7 @@ class Line2DImpl {
     Line2DImpl(const Line2DImpl &rhs) : chart_{nullptr} {
         // copy constructor
         for (const auto &src : rhs.lst_line_) {
-            lst_line_.push_back(std::make_shared<LineData2D>(*src));
+            lst_line_.push_back(std::make_shared<PointSeries2D>(*src));
         }
         for (const auto &src : rhs.lst_axis_) {
             lst_axis_.push_back(std::make_shared<Axis>(*src));
@@ -53,7 +56,7 @@ class Line2DImpl {
     Line2DImpl &operator=(const Line2DImpl &rhs) {
         // copy assigment
         for (const auto &src : rhs.lst_line_) {
-            lst_line_.push_back(std::make_shared<LineData2D>(*src));
+            lst_line_.push_back(std::make_shared<PointSeries2D>(*src));
         }
         for (const auto &src : rhs.lst_axis_) {
             lst_axis_.push_back(std::make_shared<Axis>(*src));
@@ -104,9 +107,9 @@ class Line2DImpl {
     }
     void SetTitle(const std::string &val) { title_ = val; }
 
-    LineData2D *AddLine(std::error_code *ec = nullptr) {
+    PointSeries2D *AddLine(std::error_code *ec = nullptr) {
         UNUSED(ec);
-        auto line = std::make_shared<LineData2D>();
+        auto line = std::make_shared<PointSeries2D>();
         lst_line_.push_back(line);
         return line.get();
     }
@@ -121,13 +124,13 @@ class Line2DImpl {
 
         for (const auto &axis : lst_axis_) {
             switch (axis->position()) {
-            case Axis::Position::Bottom:
-            case Axis::Position::X: {
+            case Axis::Position::kBottom:
+            case Axis::Position::kX: {
                 setAxis(ch, axis.get(), Qt::AlignBottom);
                 break;
             }
-            case Axis::Position::Left:
-            case Axis::Position::Y: {
+            case Axis::Position::kLeft:
+            case Axis::Position::kY: {
                 setAxis(ch, axis.get(), Qt::AlignLeft);
                 break;
             }
@@ -137,7 +140,20 @@ class Line2DImpl {
         }
 
         for (const auto &line : lst_line_) {
-            auto *series = new QtCharts::QLineSeries();
+            QtCharts::QXYSeries *series = nullptr;
+            switch (line->type()) {
+            case PointSeries2D::Type::kLine: {
+                series = new QtCharts::QLineSeries();
+                break;
+            }
+            case PointSeries2D::Type::kSmooth: {
+                series = new QtCharts::QSplineSeries();
+                break;
+            }
+            default:
+                series = new QtCharts::QScatterSeries();
+                break;
+            }
             for (const auto &point : line->points()) {
                 series->append(point.x(), point.y());
             }
@@ -164,12 +180,20 @@ class Line2DImpl {
             auto *obj = new QtCharts::QLogValueAxis();
             obj->setTitleText(QString(axis->title().c_str()));
             obj->setMinorTickCount(axis->minor_tick_count());
+            if (axis->minimum() < axis->maximum()) {
+                obj->setMin(axis->minimum());
+                obj->setMax(axis->maximum());
+            }
             ch->addAxis(obj, alignment);
         } else {
             auto *obj = new QtCharts::QValueAxis();
             obj->setTitleText(QString(axis->title().c_str()));
             obj->setTickCount(axis->tick_count());
             obj->setMinorTickCount(axis->minor_tick_count());
+            if (axis->minimum() < axis->maximum()) {
+                obj->setMin(axis->minimum());
+                obj->setMax(axis->maximum());
+            }
             ch->addAxis(obj, alignment);
         }
     }
@@ -199,10 +223,12 @@ Line2D &Line2D::operator=(Line2D &&rhs) noexcept {
     return *this;
 }
 void Line2D::Show(std::error_code *ec) { impl_->Show(ec); }
-void Line2D::Save(const std::string &image_path, std::error_code *ec) { impl_->Save(image_path, ec); }
+void Line2D::Save(const std::string &image_path, std::error_code *ec) {
+    impl_->Save(image_path, ec);
+}
 void Line2D::SetTitle(const std::string &val) { impl_->SetTitle(val); }
 
-LineData2D *Line2D::AddLine(std::error_code *ec) { return impl_->AddLine(ec); }
+PointSeries2D *Line2D::AddLine(std::error_code *ec) { return impl_->AddLine(ec); }
 Axis *Line2D::AddAxis(std::error_code *ec) { return impl_->AddAxis(ec); }
 
 std::shared_ptr<Line2D> NewLine2D(std::error_code *ec) {
@@ -216,3 +242,4 @@ std::shared_ptr<Line2D> NewLine2D(std::error_code *ec) {
 } // namespace stdgo
 
 #endif // STDGO_ENABLE_CHART_BACKEND_QT
+#endif // STDGO_ENABLE_CHART
