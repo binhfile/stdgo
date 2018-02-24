@@ -60,13 +60,13 @@
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE",
-                "STDGO_UNITTEST",
-                "STDGO_UNITTEST_ALL",
-                "STDGO_BENCHMARK",
-                "STDGO_BENCHMARK_ALL",
-                "STDGO_ENABLE_ALL",
-                "STDGO_ENABLE_CHART_BACKEND_QT",
-                "STDGO_UNITTEST_CHART"
+                "GO_UNITTEST",
+                "GO_UNITTEST_ALL",
+                "GO_BENCHMARK",
+                "GO_BENCHMARK_ALL",
+                "GO_ENABLE_ALL",
+                "GO_ENABLE_CHART_BACKEND_QT",
+                "GO_UNITTEST_CHART"
             ],
             "intelliSenseMode": "msvc-x64",
             "browse": {

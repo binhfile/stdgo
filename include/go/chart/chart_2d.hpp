@@ -1,5 +1,5 @@
-#ifndef STDGO_CHART_CHART_2D_H
-#define STDGO_CHART_CHART_2D_H
+#ifndef GO_CHART_CHART_2D_H
+#define GO_CHART_CHART_2D_H
 /**
  * @author binhfile
  * @brief Plotting and visualizing data
@@ -8,11 +8,11 @@
 #include "common.hpp"
 #include <memory>
 
-namespace stdgo {
+namespace go {
 namespace chart {
 
 class Chart2DImpl;
-class Chart2D : public stdgo::chart::Chart {
+class Chart2D : public go::chart::Chart {
   public:
     enum class Type {
         kLine = 0,
@@ -40,6 +40,6 @@ class Chart2D : public stdgo::chart::Chart {
 };
 
 } // namespace chart
-} // namespace stdgo
+} // namespace go
 
-#endif // STDGO_CHART_CHART_2D_H
+#endif // GO_CHART_CHART_2D_H

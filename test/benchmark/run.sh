@@ -92,8 +92,8 @@ function do_run() {
         -DCMAKE_BUILD_TYPE=Release \
         -DMODE="$1" \
         "$CUR_DIR" || exit 1
-    MSBuild.exe stdgo.benchmark.sln /property:Configuration=Release || exit 1
-    ./Release/stdgo.benchmark --benchmark_format=csv > benchmark.csv
+    MSBuild.exe go.benchmark.sln /property:Configuration=Release || exit 1
+    ./Release/go.benchmark --benchmark_format=csv > benchmark.csv
     "$PYTHON" "$CUR_DIR"/plot.py -f "$BUILD_DIR"/benchmark.csv "${@:2}"
     if [[ -f "$BUILD_DIR"/output.png ]];then
         cp "$BUILD_DIR"/output.png "$REPORT_DIR"/"$1".png

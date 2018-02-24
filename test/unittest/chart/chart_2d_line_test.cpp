@@ -1,8 +1,8 @@
-#if defined(STDGO_UNITTEST) && defined(STDGO_UNITTEST_CHART)
+#if defined(GO_UNITTEST) && defined(GO_UNITTEST_CHART)
 #include <gtest/gtest.h>
 
 #include <math.h>
-#include <stdgo/chart.hpp>
+#include <go/chart.hpp>
 #ifndef PI
 #define PI 3.1416f
 #endif
@@ -12,11 +12,11 @@ TEST(chart, line) {
     std::size_t T = 10;
     std::size_t N = T * 5;
 
-    auto chart = std::make_shared<stdgo::chart::Chart2D>();
+    auto chart = std::make_shared<go::chart::Chart2D>();
     ASSERT_EQ(0, ec.value());
     ASSERT_NE(nullptr, chart);
     chart->SetTitle("Line 2D");
-    chart->SetType(stdgo::chart::Chart2D::Type::kLine);
+    chart->SetType(go::chart::Chart2D::Type::kLine);
 
     {
         auto *line = chart->AddLine(&ec);
@@ -24,7 +24,7 @@ TEST(chart, line) {
         ASSERT_NE(nullptr, line);
 
         line->set_title("point");
-        line->set_type(stdgo::chart::PointSeries2D::Type::kPoint);
+        line->set_type(go::chart::PointSeries2D::Type::kPoint);
         auto *points = line->mutable_points();
         points->resize(N);
         for (std::size_t i = 0; i < N; i++) {
@@ -40,7 +40,7 @@ TEST(chart, line) {
         ASSERT_NE(nullptr, line);
 
         line->set_title("smooth");
-        line->set_type(stdgo::chart::PointSeries2D::Type::kSmooth);
+        line->set_type(go::chart::PointSeries2D::Type::kSmooth);
         auto *points = line->mutable_points();
         points->resize(N);
         for (std::size_t i = 0; i < N; i++) {
@@ -56,7 +56,7 @@ TEST(chart, line) {
         ASSERT_NE(nullptr, line);
 
         line->set_title("line");
-        line->set_type(stdgo::chart::PointSeries2D::Type::kLine);
+        line->set_type(go::chart::PointSeries2D::Type::kLine);
         auto *points = line->mutable_points();
         points->resize(N);
         for (std::size_t i = 0; i < N; i++) {
@@ -71,14 +71,14 @@ TEST(chart, line) {
         auto *axis = chart->AddAxis(&ec);
         ASSERT_EQ(0, ec.value());
         axis->set_title("logarithm");
-        axis->set_position(stdgo::chart::Axis::Position::kBottom);
+        axis->set_position(go::chart::Axis::Position::kBottom);
         axis->set_logarithm(true);
     }
     {
         auto *axis = chart->AddAxis(&ec);
         ASSERT_EQ(0, ec.value());
         axis->set_title("linear");
-        axis->set_position(stdgo::chart::Axis::Position::kLeft);
+        axis->set_position(go::chart::Axis::Position::kLeft);
         axis->set_tick_count(10);
         axis->set_minor_tick_count(5);
         axis->set_minimum(0.5);
@@ -89,4 +89,4 @@ TEST(chart, line) {
     chart->Show();
 }
 
-#endif // STDGO_UNITTEST_CHART
+#endif // GO_UNITTEST_CHART

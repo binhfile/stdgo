@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(stdgo.benchmark)
+project(go.benchmark)
 
 # source
 aux_source_directory(. SRC_LIST)
@@ -21,7 +21,7 @@ if ("${MODE}" STREQUAL "")
 endif()
 string (TOUPPER ${MODE} MODE)
 message ("MODE: ${MODE}")
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DSTDGO_BENCHMARK -DSTDGO_BENCHMARK_${MODE}")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DGO_BENCHMARK -DGO_BENCHMARK_${MODE}")
 
 # application
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

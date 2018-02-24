@@ -2,13 +2,13 @@
  * @author binhfile
  * @brief Chart2D backend by QT
  */
-#if defined(STDGO_HAS_CONFIG_H)
-#include <stdgo_config.hpp>
+#if defined(GO_HAS_CONFIG_H)
+#include <go_config.hpp>
 #endif
 
-#if defined(STDGO_ENABLE_ALL) || defined(STDGO_ENABLE_CHART)
-#if defined(STDGO_ENABLE_CHART_BACKEND_QT)
-#include "../../include/stdgo/chart/chart_2d.hpp"
+#if defined(GO_ENABLE_ALL) || defined(GO_ENABLE_CHART)
+#if defined(GO_ENABLE_CHART_BACKEND_QT)
+#include <go/chart/chart_2d.hpp>
 
 #include <list>
 
@@ -28,7 +28,7 @@
 #define UNUSED(x) (void)x
 #endif
 
-namespace stdgo {
+namespace go {
 namespace chart {
 
 class Chart2DImpl {
@@ -245,7 +245,7 @@ class Chart2DImpl {
 };
 
 Chart2D::Chart2D() : impl_(std::unique_ptr<Chart2DImpl>(new Chart2DImpl)) {}
-Chart2D::Chart2D(const Chart2D &rhs) : stdgo::chart::Chart() {
+Chart2D::Chart2D(const Chart2D &rhs) : go::chart::Chart() {
     // copy constructor
     auto *impl = new Chart2DImpl;
     *impl = *(rhs.impl_);
@@ -281,7 +281,7 @@ PointSeries2D *Chart2D::AddLine(std::error_code *ec) { return impl_->AddLine(ec)
 Axis *Chart2D::AddAxis(std::error_code *ec) { return impl_->AddAxis(ec); }
 
 } // namespace chart
-} // namespace stdgo
+} // namespace go
 
-#endif // STDGO_ENABLE_CHART_BACKEND_QT
-#endif // STDGO_ENABLE_CHART
+#endif // GO_ENABLE_CHART_BACKEND_QT
+#endif // GO_ENABLE_CHART

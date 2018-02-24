@@ -1,4 +1,4 @@
-#if defined(STDGO_BENCHMARK) && (defined(STDGO_BENCHMARK_MEMCPY) || defined(STDGO_BENCHMARK_ALL))
+#if defined(GO_BENCHMARK) && (defined(GO_BENCHMARK_MEMCPY) || defined(GO_BENCHMARK_ALL))
 #include <benchmark/benchmark.h>
 
 #define DEFINE_BM(name) BENCHMARK(BM_##name)->RangeMultiplier(2)->Range(8, 8 << 10);
@@ -35,8 +35,8 @@ static void BM_memcpy_c(benchmark::State &state) {
 }
 DEFINE_BM(memcpy_c)
 
-#if !defined(STDGO_BENCHMARK_ALL)
+#if !defined(GO_BENCHMARK_ALL)
 BENCHMARK_MAIN();
-#endif // !STDGO_BENCHMARK_ALL
+#endif // !GO_BENCHMARK_ALL
 
-#endif // STDGO_BENCHMARK_MEMCPY
+#endif // GO_BENCHMARK_MEMCPY

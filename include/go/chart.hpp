@@ -1,5 +1,5 @@
-#ifndef STDGO_CHART_H
-#define STDGO_CHART_H
+#ifndef GO_CHART_H
+#define GO_CHART_H
 /**
  * @author binhfile
  * @brief Plotting and visualizing data
@@ -7,4 +7,4 @@
 
 #include "chart/chart_2d.hpp"
 
-#endif // STDGO_CHART_H
+#endif // GO_CHART_H
