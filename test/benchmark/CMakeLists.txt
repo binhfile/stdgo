@@ -3,6 +3,10 @@ project(go.benchmark)
 
 # source
 aux_source_directory(. SRC_LIST)
+
+# source
+include_directories(../../include)
+
 set (CMAKE_CXX_FLAGS "")
 
 if (${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)

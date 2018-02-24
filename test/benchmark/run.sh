@@ -93,10 +93,14 @@ function do_run() {
         -DMODE="$1" \
         "$CUR_DIR" || exit 1
     MSBuild.exe go.benchmark.sln /property:Configuration=Release || exit 1
-    ./Release/go.benchmark --benchmark_format=csv > benchmark.csv
-    "$PYTHON" "$CUR_DIR"/plot.py -f "$BUILD_DIR"/benchmark.csv "${@:2}"
-    if [[ -f "$BUILD_DIR"/output.png ]];then
-        cp "$BUILD_DIR"/output.png "$REPORT_DIR"/"$1".png
+    if [[ "$2" == "--show" ]]; then
+        ./Release/go.benchmark --benchmark_format=csv > benchmark.csv
+        "$PYTHON" "$CUR_DIR"/plot.py -f "$BUILD_DIR"/benchmark.csv "${@:2}"
+        if [[ -f "$BUILD_DIR"/output.png ]];then
+            cp "$BUILD_DIR"/output.png "$REPORT_DIR"/"$1".png
+        fi
+    else
+        ./Release/go.benchmark
     fi
     return
 }
