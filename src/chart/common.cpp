@@ -1,9 +1,9 @@
 /**
  * @author binhfile
  */
-#include "../../include/stdgo/chart/common.hpp"
+#include <go/chart/common.hpp>
 
-namespace stdgo {
+namespace go {
 namespace chart {
 
 Point2D::Point2D(float _x, float _y) : x_(_x), y_(_y) {}
@@ -21,4 +21,4 @@ float Point3D::z() const { return z_; }
 void Point3D::set_z(float _z) { z_ = _z; }
 
 } // namespace chart
-} // namespace stdgo
+} // namespace go

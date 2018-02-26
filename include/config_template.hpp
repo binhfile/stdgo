@@ -1,14 +1,14 @@
-#ifndef STDGO_CONFIG_H
-#define STDGO_CONFIG_H
+#ifndef GO_CONFIG_H
+#define GO_CONFIG_H
 /**
  * @author binhfile
  * @brief Library configurations
  */
 
-// #define STDGO_HAS_CONFIG_H
-// #define STDGO_ENABLE_ALL
+// #define GO_HAS_CONFIG_H
+// #define GO_ENABLE_ALL
 
-// #define STDGO_ENABLE_CHART 1
-// #define STDGO_ENABLE_CHART_BACKEND_QT 1
+// #define GO_ENABLE_CHART 1
+// #define GO_ENABLE_CHART_BACKEND_QT 1
 
-#endif // STDGO_CONFIG_H
+#endif // GO_CONFIG_H

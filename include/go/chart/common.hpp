@@ -1,5 +1,5 @@
-#ifndef STDGO_CHART_COMMON_H
-#define STDGO_CHART_COMMON_H
+#ifndef GO_CHART_COMMON_H
+#define GO_CHART_COMMON_H
 /**
  * @author binhfile
  * @brief Common defs
@@ -8,7 +8,7 @@
 #include <system_error>
 #include <vector>
 
-namespace stdgo {
+namespace go {
 namespace chart {
 
 class Point2D {
@@ -150,6 +150,6 @@ class Chart {
 };
 
 } // namespace chart
-} // namespace stdgo
+} // namespace go
 
-#endif // STDGO_PLOT_COMMON_H
+#endif // GO_PLOT_COMMON_H
