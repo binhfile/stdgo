@@ -1,0 +1,3 @@
+include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
+file (GLOB_RECURSE SRC_STDGO_LIST ${CMAKE_CURRENT_LIST_DIR}/src/*.cpp)
+list (APPEND SRC_LIST ${SRC_STDGO_LIST})
